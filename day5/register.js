@@ -1,11 +1,23 @@
-import fs from "fs/promises";
+import { readFile } from "../utils/readAndwrite.js";
+import { writeFile } from "../utils/readAndwrite.js";
 
-export const readAndWrite = async (Path) => {
-  try {
-    const data = await fs.readFile(Path, "utf-8");
-    const jsonData = JSON.parse(data);
-    return jsonData;
-  } catch (error) {
-    console.log("unable to read the file", error);
-  }
+const userRegister = async (userDetails) => {
+const { name,email, password,gender } = userDetails;
+if(!name || !email || !password || !gender){
+console.log("Please provide all the required details");
+return;
+}
+
+const users = await readFile(FILE);
+if(users.length == 0){
+register();
+
+}
+const existinguser = users.filter(user => user.email == email);
+if(existinguser.length === 0){
+console.log("User already registered");
+return;                       
+}
+
+register();
 }
